@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot HTML Đơn Giản</title>
+    <style>
+        /* CSS để tạo khung chat */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .chat-container {
+            width: 400px;
+            height: 500px;
+            border: 2px solid #ccc; /* Khung viền */
+            border-radius: 10px;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .chat-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto; /* Cuộn nếu tin nhắn dài */
+            border-bottom: 1px solid #eee;
+        }
+        .message {
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 5px;
+            max-width: 80%;
+        }
+        .user-message {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        .bot-message {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+        }
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .chat-input button {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .chat-input button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">Chatbot Demo</div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Tin nhắn sẽ được thêm vào đây -->
+            <div class="message bot-message">Xin chào! Bạn cần giúp gì?</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Nhập tin nhắn...">
+            <button onclick="sendMessage()">Gửi</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+
+            // Thêm tin nhắn người dùng
+            const userMsg = document.createElement('div');
+            userMsg.classList.add('message', 'user-message');
+            userMsg.textContent = message;
+            chatMessages.appendChild(userMsg);
+
+            // Thêm phản hồi từ bot (ví dụ đơn giản)
+            const botMsg = document.createElement('div');
+            botMsg.classList.add('message', 'bot-message');
+            botMsg.textContent = getBotResponse(message); // Hàm xử lý phản hồi
+            chatMessages.appendChild(botMsg);
+
+            // Cuộn xuống dưới cùng
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Xóa input
+            input.value = '';
+        }
+
+        function getBotResponse(message) {
+            // Logic phản hồi đơn giản (bạn có thể mở rộng)
+            if (message.toLowerCase() === 'hi' || message.toLowerCase() === 'xin chào') {
+                return 'Chào bạn! Bạn khỏe không?';
+            } else if (message.toLowerCase() === 'bye') {
+                return 'Tạm biệt! Hẹn gặp lại.';
+            } else {
+                return 'Tôi không hiểu. Bạn có thể hỏi lại không?';
+            }
+        }
+
+        // Gửi bằng Enter
+        document.getElementById('user-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
